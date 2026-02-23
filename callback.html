@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TikTok Autorisatie — Prins Social Tracker</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; max-width: 520px; margin: 4rem auto; padding: 0 1rem; color: #1d1d1f; text-align: center; }
+        h1 { color: #0d5a4d; font-size: 1.4rem; }
+        .code-box { background: #f0f0f2; border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; word-break: break-all; font-family: monospace; font-size: 0.95rem; }
+        .error { color: #e53935; }
+        button { background: #0d5a4d; color: #fff; border: none; border-radius: 980px; padding: 10px 24px; font-size: 0.9rem; cursor: pointer; }
+        button:hover { background: #0a4a3f; }
+    </style>
+</head>
+<body>
+    <h1>TikTok Autorisatie</h1>
+    <div id="result"></div>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get('code');
+        const error = params.get('error');
+        const el = document.getElementById('result');
+        if (code) {
+            el.innerHTML = '<p>Autorisatiecode ontvangen. Kopieer deze code en plak hem in de Prins Social Tracker app:</p>' +
+                '<div class="code-box" id="code">' + code + '</div>' +
+                '<button onclick="navigator.clipboard.writeText(document.getElementById(\'code\').textContent).then(()=>this.textContent=\'Gekopieerd!\')">Kopieer code</button>';
+        } else if (error) {
+            el.innerHTML = '<p class="error">Fout: ' + error + '</p><p>' + (params.get('error_description') || '') + '</p>';
+        } else {
+            el.innerHTML = '<p>Wachten op autorisatie...</p>';
+        }
+    </script>
+</body>
+</html>
